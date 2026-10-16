@@ -1,4 +1,4 @@
-package net.java.trial_task.unit;
+package net.java.trial_task.unit.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
