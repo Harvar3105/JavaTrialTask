@@ -4,10 +4,10 @@ CREATE TABLE weather_data (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 
   station VARCHAR(255) NOT NULL,
-  wmo_code INTEGER NOT NULL,
-  air_temperature DECIMAL(5,1) NOT NULL,
-  wind_speed DECIMAL(5,1) NOT NULL,
-  phenomenon VARCHAR(255) NOT NULL,
+  wmo_code INTEGER NULL,
+  air_temperature DECIMAL(5,1) NULL,
+  wind_speed DECIMAL(5,1) NULL,
+  phenomenon VARCHAR(255) NULL,
   observation_time TIMESTAMP WITH TIME ZONE NOT NULL,
 
   CONSTRAINT uq_weather_data_station_time UNIQUE (wmo_code, observation_time)
