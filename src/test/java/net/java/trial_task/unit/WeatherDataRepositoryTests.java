@@ -76,17 +76,6 @@ public class WeatherDataRepositoryTests {
   }
 
   @Test
-  @DisplayName("save: null phenomenon violates NOT NULL constraint")
-  void save_nullPhenomenon_throws() {
-    WeatherData invalid = new WeatherData(
-      "Pärnu", PARNU, new BigDecimal("0.0"), new BigDecimal("1.0"), null, T0
-    );
-
-    assertThatThrownBy(() -> repository.saveAndFlush(invalid))
-      .isInstanceOf(DataIntegrityViolationException.class);
-  }
-
-  @Test
   @DisplayName("save: null observationTime violates NOT NULL constraint")
   void save_nullObservationTime_throws() {
     WeatherData invalid = new WeatherData(

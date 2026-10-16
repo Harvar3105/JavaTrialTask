@@ -15,16 +15,16 @@ public class WeatherData extends AbstractEntity {
   @Column(nullable = false)
   private String station;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private Integer wmoCode;
 
-  @Column(nullable = false, precision = 5, scale = 1)
+  @Column(nullable = true, precision = 5, scale = 1)
   private BigDecimal airTemperature;
 
-  @Column(nullable = false, precision = 5, scale = 1)
+  @Column(nullable = true, precision = 5, scale = 1)
   private BigDecimal windSpeed;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private String phenomenon;
 
   @Column(nullable = false)
