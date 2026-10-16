@@ -8,9 +8,7 @@ CREATE TABLE weather_data (
   air_temperature DECIMAL(5,1) NULL,
   wind_speed DECIMAL(5,1) NULL,
   phenomenon VARCHAR(255) NULL,
-  observation_time TIMESTAMP WITH TIME ZONE NOT NULL,
-
-  CONSTRAINT uq_weather_data_station_time UNIQUE (wmo_code, observation_time)
+  observation_time TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
 CREATE INDEX idx_weather_data_wmo_time ON weather_data (wmo_code, observation_time DESC);
