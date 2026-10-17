@@ -1,4 +1,4 @@
-package net.java.trial_task.shared.domain.entity.condition;
+package net.java.trial_task.application.domain.entity.condition;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -13,22 +13,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import net.java.trial_task.application.domain.entity.data.Vehicle;
+import net.java.trial_task.application.domain.enums.Condition;
 import net.java.trial_task.shared.domain.entity.AbstractEntity;
-import net.java.trial_task.shared.domain.entity.data.Vehicle;
-import net.java.trial_task.shared.domain.enums.Condition;
 
 @Entity 
-@Table (name = "wsef")
-public class WSEF extends AbstractEntity{
+@Table(name = "wpef")
+public class WPEF extends AbstractEntity {
   @Column (nullable = false)
   @Enumerated (EnumType.STRING)
   private Condition condition;
 
-  @Column (nullable = false, precision = 5, scale = 1)
-  private BigDecimal windSpeed;
-
-  @Column (nullable = false, precision = 5, scale = 1)
-  private BigDecimal maxWindSpeed;
+  @Column (nullable = false)
+  private String phenomenon;
 
   //No fee = 0, forbidden = null
   @Column (nullable = false, precision = 5, scale = 1)
@@ -36,23 +33,22 @@ public class WSEF extends AbstractEntity{
 
   @ManyToMany
   @JoinTable(
-    name = "wsef_relation",
-    joinColumns = @JoinColumn(name = "wsef_id"),
+    name = "wpef_relation",
+    joinColumns = @JoinColumn(name = "wpef_id"),
     inverseJoinColumns = @JoinColumn(name = "vehicle_id")
   )
   private Set<Vehicle> vehicles = new HashSet<>();
 
-  protected WSEF(){}
-  public WSEF(
+  protected WPEF(){}
+
+  public WPEF(
     Condition condition,
-    BigDecimal windSpeed,
-    BigDecimal maxWindSpeed,
+    String phenomenon,
     BigDecimal fee,
     Set<Vehicle> vehicles
   ) {
     this.condition = condition;
-    this.windSpeed = windSpeed;
-    this.maxWindSpeed = maxWindSpeed;
+    this.phenomenon = phenomenon;
     this.fee = fee;
     this.vehicles = new HashSet<>(vehicles);
   }
@@ -61,12 +57,8 @@ public class WSEF extends AbstractEntity{
     return this.condition;
   }
 
-  public BigDecimal getWindSpeed(){
-    return this.windSpeed;
-  }
-
-  public BigDecimal getMaxWindSpeed(){
-    return this.maxWindSpeed;
+  public String getPhenomenon(){
+    return this.phenomenon;
   }
 
   public BigDecimal getFee(){

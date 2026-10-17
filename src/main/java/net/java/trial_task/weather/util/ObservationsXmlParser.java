@@ -1,4 +1,4 @@
-package net.java.trial_task.weather.service;
+package net.java.trial_task.weather.util;
 
 
 import org.springframework.stereotype.Component;

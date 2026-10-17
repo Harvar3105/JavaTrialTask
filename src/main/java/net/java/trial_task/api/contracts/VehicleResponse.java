@@ -2,7 +2,7 @@ package net.java.trial_task.api.contracts;
 
 import java.time.Instant;
 
-import net.java.trial_task.shared.domain.entity.data.Vehicle;
+import net.java.trial_task.application.domain.entity.data.Vehicle;
 
 public record VehicleResponse(
   Long id,

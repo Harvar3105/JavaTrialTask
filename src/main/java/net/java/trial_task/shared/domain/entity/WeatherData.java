@@ -1,4 +1,4 @@
-package net.java.trial_task.shared.domain.entity.data;
+package net.java.trial_task.shared.domain.entity;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -6,7 +6,6 @@ import java.time.Instant;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import net.java.trial_task.shared.domain.entity.AbstractEntity;
 
 @Entity 
 @Table (name = "weather_data")

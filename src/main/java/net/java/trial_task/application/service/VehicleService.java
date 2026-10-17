@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.exceptions.VehicleAlreadyExistsException;
 import net.java.trial_task.application.exceptions.VehicleNotFoundException;
 import net.java.trial_task.application.repository.VehicleRepository;
-import net.java.trial_task.shared.domain.entity.data.Vehicle;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import net.java.trial_task.weather.exceptions.WeatherParseException;
-import net.java.trial_task.weather.service.ObservationsXmlParser;
+import net.java.trial_task.weather.util.ObservationsXmlParser;
 
 @SpringBootTest 
 public class ObservationsXmlParserTests {

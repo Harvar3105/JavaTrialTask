@@ -1,7 +1,6 @@
 package net.java.trial_task.shared.domain.entity;
 
 import java.time.Instant;
-import java.util.Objects;
 
 import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import net.java.trial_task.shared.domain.entity.data.Vehicle;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)

@@ -15,16 +15,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import net.java.trial_task.shared.domain.entity.data.WeatherData;
+import net.java.trial_task.shared.domain.entity.WeatherData;
 import net.java.trial_task.shared.repository.WeatherRepository;
+import net.java.trial_task.shared.service.WeatherService;
 import net.java.trial_task.weather.client.WeatherApiClient;
 import net.java.trial_task.weather.dto.ObservationsDto;
 import net.java.trial_task.weather.dto.StationDto;
 import net.java.trial_task.weather.exceptions.WeatherDataUnavailableException;
-import net.java.trial_task.weather.service.ObservationsXmlParser;
-import net.java.trial_task.weather.service.WeatherService;
+import net.java.trial_task.weather.util.ObservationsXmlParser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -34,7 +33,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest 
 @ExtendWith(MockitoExtension.class)
 class WeatherServiceTests {
 

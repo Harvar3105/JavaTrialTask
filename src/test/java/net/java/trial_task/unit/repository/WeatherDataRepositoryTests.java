@@ -10,17 +10,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.java.trial_task.shared.domain.entity.data.WeatherData;
+import net.java.trial_task.shared.domain.entity.WeatherData;
 import net.java.trial_task.shared.repository.WeatherRepository;
 
-@SpringBootTest
+@DataJpaTest
 @Transactional
 public class WeatherDataRepositoryTests {
 

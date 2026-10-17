@@ -1,4 +1,4 @@
-package net.java.trial_task.shared.domain.enums;
+package net.java.trial_task.application.domain.enums;
 
 public enum Condition {
   less,

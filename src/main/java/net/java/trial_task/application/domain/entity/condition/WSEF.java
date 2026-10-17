@@ -1,4 +1,4 @@
-package net.java.trial_task.shared.domain.entity.condition;
+package net.java.trial_task.application.domain.entity.condition;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -13,22 +13,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import net.java.trial_task.application.domain.entity.data.Vehicle;
+import net.java.trial_task.application.domain.enums.Condition;
 import net.java.trial_task.shared.domain.entity.AbstractEntity;
-import net.java.trial_task.shared.domain.entity.data.Vehicle;
-import net.java.trial_task.shared.domain.enums.Condition;
 
 @Entity 
-@Table (name = "atef")
-public class ATEF extends AbstractEntity {
+@Table (name = "wsef")
+public class WSEF extends AbstractEntity{
   @Column (nullable = false)
   @Enumerated (EnumType.STRING)
   private Condition condition;
 
   @Column (nullable = false, precision = 5, scale = 1)
-  private BigDecimal temperature;
+  private BigDecimal windSpeed;
 
   @Column (nullable = false, precision = 5, scale = 1)
-  private BigDecimal maxTemperature;
+  private BigDecimal maxWindSpeed;
 
   //No fee = 0, forbidden = null
   @Column (nullable = false, precision = 5, scale = 1)
@@ -36,24 +36,23 @@ public class ATEF extends AbstractEntity {
 
   @ManyToMany
   @JoinTable(
-    name = "atef_relation",
-    joinColumns = @JoinColumn(name = "atef_id"),
+    name = "wsef_relation",
+    joinColumns = @JoinColumn(name = "wsef_id"),
     inverseJoinColumns = @JoinColumn(name = "vehicle_id")
   )
   private Set<Vehicle> vehicles = new HashSet<>();
 
-  protected ATEF(){}
-
-  public ATEF(
+  protected WSEF(){}
+  public WSEF(
     Condition condition,
-    BigDecimal temperature,
-    BigDecimal maxTemperature,
+    BigDecimal windSpeed,
+    BigDecimal maxWindSpeed,
     BigDecimal fee,
     Set<Vehicle> vehicles
-  ){
+  ) {
     this.condition = condition;
-    this.temperature = temperature;
-    this.maxTemperature = maxTemperature;
+    this.windSpeed = windSpeed;
+    this.maxWindSpeed = maxWindSpeed;
     this.fee = fee;
     this.vehicles = new HashSet<>(vehicles);
   }
@@ -62,12 +61,12 @@ public class ATEF extends AbstractEntity {
     return this.condition;
   }
 
-  public BigDecimal getTemperature(){
-    return this.temperature;
+  public BigDecimal getWindSpeed(){
+    return this.windSpeed;
   }
 
-  public BigDecimal getMaxTemperature(){
-    return this.maxTemperature;
+  public BigDecimal getMaxWindSpeed(){
+    return this.maxWindSpeed;
   }
 
   public BigDecimal getFee(){

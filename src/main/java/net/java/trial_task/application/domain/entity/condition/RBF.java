@@ -1,4 +1,4 @@
-package net.java.trial_task.shared.domain.entity.condition;
+package net.java.trial_task.application.domain.entity.condition;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package net.java.trial_task.weather.service;
+package net.java.trial_task.shared.service;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -13,11 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import net.java.trial_task.shared.domain.entity.data.WeatherData;
+import net.java.trial_task.shared.domain.entity.WeatherData;
 import net.java.trial_task.shared.repository.WeatherRepository;
 import net.java.trial_task.weather.client.WeatherApiClient;
 import net.java.trial_task.weather.dto.ObservationsDto;
 import net.java.trial_task.weather.dto.StationDto;
+import net.java.trial_task.weather.util.ObservationsXmlParser;
 
 @Service 
 public class WeatherService {

@@ -2,7 +2,8 @@ package net.java.trial_task.application.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import net.java.trial_task.shared.domain.entity.data.Vehicle;
+import net.java.trial_task.application.domain.entity.data.Vehicle;
+
 import java.util.Optional;
 
 

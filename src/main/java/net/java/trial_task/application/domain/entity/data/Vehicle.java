@@ -1,4 +1,4 @@
-package net.java.trial_task.shared.domain.entity.data;
+package net.java.trial_task.application.domain.entity.data;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
