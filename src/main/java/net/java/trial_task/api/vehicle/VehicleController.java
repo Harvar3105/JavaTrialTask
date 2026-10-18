@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
-import net.java.trial_task.api.contracts.VehicleRequest;
-import net.java.trial_task.api.contracts.VehicleResponse;
+import net.java.trial_task.api.contracts.vehicle.VehicleRequest;
+import net.java.trial_task.api.contracts.vehicle.VehicleResponse;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.service.VehicleService;
 

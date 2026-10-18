@@ -1,8 +1,7 @@
 package net.java.trial_task.unit.controller;
 
 import tools.jackson.databind.ObjectMapper;
-
-import net.java.trial_task.api.contracts.VehicleRequest;
+import net.java.trial_task.api.contracts.vehicle.VehicleRequest;
 import net.java.trial_task.api.vehicle.VehicleController;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.exceptions.VehicleAlreadyExistsException;

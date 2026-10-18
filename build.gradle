@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.1.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
 }
 
 group = 'net.java'
@@ -37,6 +38,13 @@ dependencies {
 	testImplementation("org.awaitility:awaitility")
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+	dependsOn test
 }
 
 tasks.named('test') {
