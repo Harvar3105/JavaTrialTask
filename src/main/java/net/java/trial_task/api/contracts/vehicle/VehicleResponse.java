@@ -1,4 +1,4 @@
-package net.java.trial_task.api.contracts;
+package net.java.trial_task.api.contracts.vehicle;
 
 import java.time.Instant;
 

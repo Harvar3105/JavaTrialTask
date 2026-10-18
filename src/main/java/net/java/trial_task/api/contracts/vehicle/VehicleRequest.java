@@ -1,4 +1,4 @@
-package net.java.trial_task.api.contracts;
+package net.java.trial_task.api.contracts.vehicle;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
