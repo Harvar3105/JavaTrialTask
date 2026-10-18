@@ -2,6 +2,7 @@ package net.java.trial_task.application.domain.entity.condition;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import net.java.trial_task.shared.domain.entity.AbstractEntity;
@@ -9,8 +10,11 @@ import net.java.trial_task.shared.domain.entity.AbstractEntity;
 @Entity 
 @Table (name = "rbf")
 public class RBF extends AbstractEntity {
+  @Column (nullable = false, updatable = false)
   private Long cityId;
+  @Column (nullable = false, updatable = false)
   private Long vehicleTypeId;
+  @Column (nullable = true, precision = 5, scale = 1)
   private BigDecimal fee;
 
   public RBF() {}
@@ -29,8 +33,12 @@ public class RBF extends AbstractEntity {
     return vehicleTypeId;
   }
 
-  public BigDecimal getBaseFee() {
+  public BigDecimal getFee() {
     return fee;
   }
-  
+
+  public void setFee(BigDecimal newFee) {
+    this.fee = newFee;
+  }
+
 }
