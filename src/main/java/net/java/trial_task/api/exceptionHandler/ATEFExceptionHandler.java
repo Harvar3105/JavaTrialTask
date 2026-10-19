@@ -10,7 +10,7 @@ import net.java.trial_task.application.exceptions.condition.ATEFDataIntegrityVio
 import net.java.trial_task.application.exceptions.condition.ATEFNotFoundException;
 
 @RestControllerAdvice(assignableTypes = ATEFController.class)
-public class ATEFControllerAdvice {
+public class ATEFExceptionHandler {
   @ExceptionHandler(ATEFNotFoundException.class)
   public ProblemDetail handleNotFound(ATEFNotFoundException ex) {
     return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());

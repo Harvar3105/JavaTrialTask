@@ -1,7 +1,7 @@
 package net.java.trial_task.unit.controller;
 
 import net.java.trial_task.api.controller.condition.ATEFController;
-import net.java.trial_task.api.exceptionHandler.ATEFControllerAdvice;
+import net.java.trial_task.api.exceptionHandler.ATEFExceptionHandler;
 import net.java.trial_task.application.domain.entity.condition.ATEF;
 import net.java.trial_task.application.domain.enums.Condition;
 import net.java.trial_task.application.exceptions.condition.ATEFDataIntegrityViolationException;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ATEFController.class)
-@Import(ATEFControllerAdvice.class)
+@Import(ATEFExceptionHandler.class)
 class ATEFControllerTests {
   @Autowired private MockMvc mockMvc;
   @MockitoBean private ATEFService atefService;
