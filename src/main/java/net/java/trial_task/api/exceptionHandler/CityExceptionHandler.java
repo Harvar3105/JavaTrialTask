@@ -6,9 +6,9 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import net.java.trial_task.api.city.CityController;
-import net.java.trial_task.application.exceptions.CityAlreadyExistsException;
-import net.java.trial_task.application.exceptions.CityNotFoundException;
+import net.java.trial_task.api.controller.data.CityController;
+import net.java.trial_task.application.exceptions.data.CityAlreadyExistsException;
+import net.java.trial_task.application.exceptions.data.CityNotFoundException;
 
 @RestControllerAdvice(assignableTypes = CityController.class)
 public class CityExceptionHandler {

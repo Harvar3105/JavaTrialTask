@@ -29,12 +29,12 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
-import net.java.trial_task.api.contracts.rbf.RBFCreateRequest;
-import net.java.trial_task.api.contracts.rbf.RBFUpdateRequest;
-import net.java.trial_task.api.rbf.RBFController;
+import net.java.trial_task.api.contracts.condition.rbf.RBFCreateRequest;
+import net.java.trial_task.api.contracts.condition.rbf.RBFUpdateRequest;
+import net.java.trial_task.api.controller.condition.RBFController;
 import net.java.trial_task.application.domain.entity.condition.RBF;
-import net.java.trial_task.application.exceptions.RBFNotFoundException;
-import net.java.trial_task.application.service.RBFService;
+import net.java.trial_task.application.exceptions.condition.RBFNotFoundException;
+import net.java.trial_task.application.service.condition.RBFService;
 
 @WebMvcTest(RBFController.class)
 class RBFControllerTests {

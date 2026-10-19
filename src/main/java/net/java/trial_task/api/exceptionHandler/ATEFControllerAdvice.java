@@ -5,9 +5,9 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import net.java.trial_task.api.atef.ATEFController;
-import net.java.trial_task.application.exceptions.ATEFDataIntegrityViolationException;
-import net.java.trial_task.application.exceptions.ATEFNotFoundException;
+import net.java.trial_task.api.controller.condition.ATEFController;
+import net.java.trial_task.application.exceptions.condition.ATEFDataIntegrityViolationException;
+import net.java.trial_task.application.exceptions.condition.ATEFNotFoundException;
 
 @RestControllerAdvice(assignableTypes = ATEFController.class)
 public class ATEFControllerAdvice {

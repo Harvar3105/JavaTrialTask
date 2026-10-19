@@ -1,14 +1,12 @@
 package net.java.trial_task.unit.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import net.java.trial_task.api.atef.ATEFController;
+import net.java.trial_task.api.controller.condition.ATEFController;
 import net.java.trial_task.api.exceptionHandler.ATEFControllerAdvice;
 import net.java.trial_task.application.domain.entity.condition.ATEF;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.exceptions.ATEFDataIntegrityViolationException;
-import net.java.trial_task.application.exceptions.ATEFNotFoundException;
-import net.java.trial_task.application.service.ATEFService;
+import net.java.trial_task.application.exceptions.condition.ATEFDataIntegrityViolationException;
+import net.java.trial_task.application.exceptions.condition.ATEFNotFoundException;
+import net.java.trial_task.application.service.condition.ATEFService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

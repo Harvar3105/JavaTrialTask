@@ -11,12 +11,12 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import net.java.trial_task.api.exceptionHandler.WPEFExceptionHandler;
-import net.java.trial_task.api.wpef.WPEFController;
+import net.java.trial_task.api.controller.condition.WPEFController;
 import net.java.trial_task.application.domain.entity.condition.WPEF;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.exceptions.WPEFDataIntegrityViolationException;
-import net.java.trial_task.application.exceptions.WPEFNotFoundException;
-import net.java.trial_task.application.service.WPEFService;
+import net.java.trial_task.application.exceptions.condition.WPEFDataIntegrityViolationException;
+import net.java.trial_task.application.exceptions.condition.WPEFNotFoundException;
+import net.java.trial_task.application.service.condition.WPEFService;
 
 import java.math.BigDecimal;
 import java.time.Instant;

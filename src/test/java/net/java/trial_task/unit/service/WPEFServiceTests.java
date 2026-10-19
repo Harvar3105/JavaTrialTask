@@ -11,11 +11,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import net.java.trial_task.application.domain.entity.condition.WPEF;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.exceptions.VehicleNotFoundException;
-import net.java.trial_task.application.exceptions.WPEFNotFoundException;
-import net.java.trial_task.application.repository.VehicleRepository;
-import net.java.trial_task.application.repository.WPEFRepository;
-import net.java.trial_task.application.service.WPEFService;
+import net.java.trial_task.application.exceptions.data.VehicleNotFoundException;
+import net.java.trial_task.application.exceptions.condition.WPEFNotFoundException;
+import net.java.trial_task.application.repository.data.VehicleRepository;
+import net.java.trial_task.application.repository.condition.WPEFRepository;
+import net.java.trial_task.application.service.condition.WPEFService;
 
 import java.math.BigDecimal;
 import java.util.List;

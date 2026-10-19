@@ -5,9 +5,9 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import net.java.trial_task.api.wpef.WPEFController;
-import net.java.trial_task.application.exceptions.WPEFDataIntegrityViolationException;
-import net.java.trial_task.application.exceptions.WPEFNotFoundException;
+import net.java.trial_task.api.controller.condition.WPEFController;
+import net.java.trial_task.application.exceptions.condition.WPEFDataIntegrityViolationException;
+import net.java.trial_task.application.exceptions.condition.WPEFNotFoundException;
 
 @RestControllerAdvice(assignableTypes = WPEFController.class)
 public class WPEFExceptionHandler {

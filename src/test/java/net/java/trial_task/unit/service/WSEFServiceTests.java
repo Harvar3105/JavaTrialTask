@@ -7,17 +7,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.annotation.Import;
 
-import net.java.trial_task.api.exceptionHandler.WSEFExceptionHandler;
 import net.java.trial_task.application.domain.entity.condition.WSEF;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.exceptions.VehicleNotFoundException;
-import net.java.trial_task.application.exceptions.WSEFNotFoundException;
-import net.java.trial_task.application.repository.VehicleRepository;
-import net.java.trial_task.application.repository.WSEFRepository;
-import net.java.trial_task.application.service.WSEFService;
+import net.java.trial_task.application.exceptions.data.VehicleNotFoundException;
+import net.java.trial_task.application.exceptions.condition.WSEFNotFoundException;
+import net.java.trial_task.application.repository.data.VehicleRepository;
+import net.java.trial_task.application.repository.condition.WSEFRepository;
+import net.java.trial_task.application.service.condition.WSEFService;
 
 import java.math.BigDecimal;
 import java.util.List;

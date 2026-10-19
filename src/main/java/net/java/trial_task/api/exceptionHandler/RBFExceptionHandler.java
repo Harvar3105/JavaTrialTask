@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import net.java.trial_task.api.rbf.RBFController;
-import net.java.trial_task.application.exceptions.RBFNotFoundException;
+import net.java.trial_task.api.controller.condition.RBFController;
+import net.java.trial_task.application.exceptions.condition.RBFNotFoundException;
 
 @RestControllerAdvice(assignableTypes = RBFController.class)
 public class RBFExceptionHandler extends ResponseEntityExceptionHandler {

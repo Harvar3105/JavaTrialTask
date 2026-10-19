@@ -23,11 +23,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import net.java.trial_task.application.domain.entity.condition.ATEF;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.exceptions.ATEFNotFoundException;
-import net.java.trial_task.application.exceptions.VehicleNotFoundException;
-import net.java.trial_task.application.repository.ATEFRepository;
-import net.java.trial_task.application.repository.VehicleRepository;
-import net.java.trial_task.application.service.ATEFService;
+import net.java.trial_task.application.exceptions.condition.ATEFNotFoundException;
+import net.java.trial_task.application.exceptions.data.VehicleNotFoundException;
+import net.java.trial_task.application.repository.condition.ATEFRepository;
+import net.java.trial_task.application.repository.data.VehicleRepository;
+import net.java.trial_task.application.service.condition.ATEFService;
 
 @ExtendWith(MockitoExtension.class)
 class ATEFServiceTests {

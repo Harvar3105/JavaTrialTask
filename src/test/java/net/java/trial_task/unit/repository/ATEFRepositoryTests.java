@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import net.java.trial_task.application.domain.entity.condition.ATEF;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.repository.ATEFRepository;
+import net.java.trial_task.application.repository.condition.ATEFRepository;
 
 @DataJpaTest
 class ATEFRepositoryTests {

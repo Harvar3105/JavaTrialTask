@@ -26,11 +26,11 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
-import net.java.trial_task.api.city.CityController;
-import net.java.trial_task.api.contracts.city.CityRequest;
+import net.java.trial_task.api.controller.data.CityController;
+import net.java.trial_task.api.contracts.data.city.CityRequest;
 import net.java.trial_task.application.domain.entity.data.City;
-import net.java.trial_task.application.exceptions.CityNotFoundException;
-import net.java.trial_task.application.service.CityService;
+import net.java.trial_task.application.exceptions.data.CityNotFoundException;
+import net.java.trial_task.application.service.data.CityService;
 
 @WebMvcTest(CityController.class)
 class CityControllerTests {

@@ -16,9 +16,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import net.java.trial_task.application.domain.entity.data.City;
-import net.java.trial_task.application.exceptions.CityNotFoundException;
-import net.java.trial_task.application.repository.CityRepository;
-import net.java.trial_task.application.service.CityService;
+import net.java.trial_task.application.exceptions.data.CityNotFoundException;
+import net.java.trial_task.application.repository.data.CityRepository;
+import net.java.trial_task.application.service.data.CityService;
 
 @ExtendWith(MockitoExtension.class)
 class CityServiceTests {

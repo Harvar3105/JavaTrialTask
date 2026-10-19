@@ -6,9 +6,9 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import net.java.trial_task.api.vehicle.VehicleController;
-import net.java.trial_task.application.exceptions.VehicleAlreadyExistsException;
-import net.java.trial_task.application.exceptions.VehicleNotFoundException;
+import net.java.trial_task.api.controller.data.VehicleController;
+import net.java.trial_task.application.exceptions.data.VehicleAlreadyExistsException;
+import net.java.trial_task.application.exceptions.data.VehicleNotFoundException;
 
 @RestControllerAdvice(assignableTypes = VehicleController.class)
 public class VehicleExceptionHandler {

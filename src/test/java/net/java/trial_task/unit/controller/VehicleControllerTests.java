@@ -1,12 +1,12 @@
 package net.java.trial_task.unit.controller;
 
 import tools.jackson.databind.ObjectMapper;
-import net.java.trial_task.api.contracts.vehicle.VehicleRequest;
-import net.java.trial_task.api.vehicle.VehicleController;
+import net.java.trial_task.api.contracts.data.vehicle.VehicleRequest;
+import net.java.trial_task.api.controller.data.VehicleController;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
-import net.java.trial_task.application.exceptions.VehicleAlreadyExistsException;
-import net.java.trial_task.application.exceptions.VehicleNotFoundException;
-import net.java.trial_task.application.service.VehicleService;
+import net.java.trial_task.application.exceptions.data.VehicleAlreadyExistsException;
+import net.java.trial_task.application.exceptions.data.VehicleNotFoundException;
+import net.java.trial_task.application.service.data.VehicleService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
