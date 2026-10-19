@@ -8,10 +8,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import net.java.trial_task.application.domain.entity.data.Vehicle;
-import net.java.trial_task.application.exceptions.VehicleAlreadyExistsException;
-import net.java.trial_task.application.exceptions.VehicleNotFoundException;
-import net.java.trial_task.application.repository.VehicleRepository;
-import net.java.trial_task.application.service.VehicleService;
+import net.java.trial_task.application.exceptions.data.VehicleAlreadyExistsException;
+import net.java.trial_task.application.exceptions.data.VehicleNotFoundException;
+import net.java.trial_task.application.repository.data.VehicleRepository;
+import net.java.trial_task.application.service.data.VehicleService;
 
 import java.util.List;
 import java.util.Optional;

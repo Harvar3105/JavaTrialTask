@@ -15,7 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.exceptions.WPEFDataIntegrityViolationException;
+import net.java.trial_task.application.exceptions.condition.WPEFDataIntegrityViolationException;
 import net.java.trial_task.shared.domain.entity.AbstractEntity;
 
 @Entity 

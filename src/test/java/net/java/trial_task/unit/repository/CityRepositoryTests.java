@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import net.java.trial_task.AppConfig;
 import net.java.trial_task.application.domain.entity.data.City;
-import net.java.trial_task.application.repository.CityRepository;
+import net.java.trial_task.application.repository.data.CityRepository;
 
 @DataJpaTest
 @Transactional

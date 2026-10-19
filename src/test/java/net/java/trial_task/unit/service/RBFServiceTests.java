@@ -20,9 +20,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import net.java.trial_task.application.domain.entity.condition.RBF;
-import net.java.trial_task.application.exceptions.RBFNotFoundException;
-import net.java.trial_task.application.repository.RBFRepository;
-import net.java.trial_task.application.service.RBFService;
+import net.java.trial_task.application.exceptions.condition.RBFNotFoundException;
+import net.java.trial_task.application.repository.condition.RBFRepository;
+import net.java.trial_task.application.service.condition.RBFService;
 
 @ExtendWith(MockitoExtension.class)
 class RBFServiceTests {

@@ -17,9 +17,9 @@ import net.java.trial_task.AppConfig;
 import net.java.trial_task.application.domain.entity.condition.RBF;
 import net.java.trial_task.application.domain.entity.data.City;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
-import net.java.trial_task.application.repository.CityRepository;
-import net.java.trial_task.application.repository.RBFRepository;
-import net.java.trial_task.application.repository.VehicleRepository;
+import net.java.trial_task.application.repository.data.CityRepository;
+import net.java.trial_task.application.repository.condition.RBFRepository;
+import net.java.trial_task.application.repository.data.VehicleRepository;
 
 @DataJpaTest
 @Transactional

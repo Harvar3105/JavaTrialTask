@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import net.java.trial_task.AppConfig;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
-import net.java.trial_task.application.repository.VehicleRepository;
+import net.java.trial_task.application.repository.data.VehicleRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

@@ -10,7 +10,7 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import net.java.trial_task.application.domain.entity.condition.WSEF;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.repository.WSEFRepository;
+import net.java.trial_task.application.repository.condition.WSEFRepository;
 
 import java.math.BigDecimal;
 import java.util.List;

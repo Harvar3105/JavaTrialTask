@@ -11,12 +11,12 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import net.java.trial_task.api.exceptionHandler.WSEFExceptionHandler;
-import net.java.trial_task.api.wsef.WSEFController;
+import net.java.trial_task.api.controller.condition.WSEFController;
 import net.java.trial_task.application.domain.entity.condition.WSEF;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.exceptions.WSEFDataIntegrityViolationException;
-import net.java.trial_task.application.exceptions.WSEFNotFoundException;
-import net.java.trial_task.application.service.WSEFService;
+import net.java.trial_task.application.exceptions.condition.WSEFDataIntegrityViolationException;
+import net.java.trial_task.application.exceptions.condition.WSEFNotFoundException;
+import net.java.trial_task.application.service.condition.WSEFService;
 
 import java.math.BigDecimal;
 import java.time.Instant;
