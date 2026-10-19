@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
+import net.java.trial_task.application.exceptions.WPEFDataIntegrityViolationException;
 import net.java.trial_task.shared.domain.entity.AbstractEntity;
 
 @Entity 
@@ -28,7 +29,7 @@ public class WPEF extends AbstractEntity {
   private String phenomenon;
 
   //No fee = 0, forbidden = null
-  @Column (nullable = false, precision = 5, scale = 1)
+  @Column (nullable = true, precision = 5, scale = 1)
   private BigDecimal fee;
 
   @ManyToMany
@@ -47,6 +48,8 @@ public class WPEF extends AbstractEntity {
     BigDecimal fee,
     Set<Vehicle> vehicles
   ) {
+    this.validateData(condition, phenomenon);
+
     this.condition = condition;
     this.phenomenon = phenomenon;
     this.fee = fee;
@@ -79,6 +82,19 @@ public class WPEF extends AbstractEntity {
 
   public void removeVehicle(Vehicle vehicle) {
     vehicles.remove(vehicle);
+  }
+
+  public void update(Condition condition, String phenomenon, BigDecimal fee){
+    this.validateData(condition, phenomenon);
+
+    this.condition = condition;
+    this.phenomenon = phenomenon;
+    this.fee = fee;
+  }
+
+  public void validateData(Condition condition, String phenomenon){
+    if (condition == null || condition != Condition.related) throw new WPEFDataIntegrityViolationException("Only 'related' condition is allowed!");
+    if (phenomenon == null || phenomenon.isBlank()) throw new WPEFDataIntegrityViolationException("Phenomenon cannot be blank");
   }
   
 }
