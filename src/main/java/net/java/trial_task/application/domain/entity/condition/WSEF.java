@@ -15,6 +15,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
+import net.java.trial_task.application.exceptions.ATEFDataIntegrityViolationException;
+import net.java.trial_task.application.exceptions.WSEFDataIntegrityViolationException;
 import net.java.trial_task.shared.domain.entity.AbstractEntity;
 
 @Entity 
@@ -27,11 +29,11 @@ public class WSEF extends AbstractEntity{
   @Column (nullable = false, precision = 5, scale = 1)
   private BigDecimal windSpeed;
 
-  @Column (nullable = false, precision = 5, scale = 1)
+  @Column (nullable = true, precision = 5, scale = 1)
   private BigDecimal maxWindSpeed;
 
   //No fee = 0, forbidden = null
-  @Column (nullable = false, precision = 5, scale = 1)
+  @Column (nullable = true, precision = 5, scale = 1)
   private BigDecimal fee;
 
   @ManyToMany
@@ -50,11 +52,12 @@ public class WSEF extends AbstractEntity{
     BigDecimal fee,
     Set<Vehicle> vehicles
   ) {
+    this.validateData(condition, windSpeed, maxWindSpeed);
     this.condition = condition;
     this.windSpeed = windSpeed;
     this.maxWindSpeed = maxWindSpeed;
     this.fee = fee;
-    this.vehicles = new HashSet<>(vehicles);
+    if (vehicles != null) this.vehicles = new HashSet<>(vehicles);
   }
 
   public Condition getCondition(){
@@ -87,6 +90,32 @@ public class WSEF extends AbstractEntity{
 
   public void removeVehicle(Vehicle vehicle) {
     vehicles.remove(vehicle);
+  }
+
+  public void update(Condition condition, BigDecimal windSpeed, BigDecimal maxWindSpeed, BigDecimal fee){
+    this.validateData(condition, windSpeed, maxWindSpeed);
+
+    this.condition = condition;
+    this.windSpeed = windSpeed;
+    this.maxWindSpeed = maxWindSpeed;
+    this.fee = fee;
+  }
+
+  private void validateData(Condition condition, BigDecimal windSpeed, BigDecimal maxWindSpeed){
+    if (condition == null) throw new WSEFDataIntegrityViolationException("Condition must be provided!");
+    if (windSpeed == null) throw new WSEFDataIntegrityViolationException("Wind speed must be provided!");
+
+    if (condition == Condition.related)
+      throw new ATEFDataIntegrityViolationException("WSEF cannot contain condition " + condition.toString());
+
+    if (maxWindSpeed == null && (condition == Condition.inRange || condition == Condition.notInRange))
+      throw new ATEFDataIntegrityViolationException("Range must be specified!");
+    if (maxWindSpeed != null && (condition != Condition.inRange && condition != Condition.notInRange))
+      throw new ATEFDataIntegrityViolationException("Max wind speed must be provided only for range conditions!");
+
+    if (maxWindSpeed != null && windSpeed.compareTo(maxWindSpeed) >= 0)
+      throw new ATEFDataIntegrityViolationException("Wind speed cannot be higher or equal to max wind speed!");
+
   }
   
 }
