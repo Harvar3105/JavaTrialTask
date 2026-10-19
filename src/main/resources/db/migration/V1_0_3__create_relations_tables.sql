@@ -5,7 +5,8 @@ CREATE TABLE atef_relation (
 
   atef_id BIGINT NOT NULL,
   vehicle_id  BIGINT NOT NULL,
-  CONSTRAINT fk_atef_relation_atef FOREIGN KEY (atef_id) REFERENCES atef (id),
+  CONSTRAINT uq_atef_relation UNIQUE (atef_id, vehicle_id),
+  CONSTRAINT fk_atef_relation_atef FOREIGN KEY (atef_id) REFERENCES atef (id) ON DELETE CASCADE,
   CONSTRAINT fk_atef_relation_vehicle FOREIGN KEY (vehicle_id ) REFERENCES vehicle (id)
 );
 

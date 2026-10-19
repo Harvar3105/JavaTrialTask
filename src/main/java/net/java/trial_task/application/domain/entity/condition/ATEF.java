@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
+import net.java.trial_task.application.exceptions.ATEFDataIntegrityViolationException;
 import net.java.trial_task.shared.domain.entity.AbstractEntity;
 
 @Entity 
@@ -27,11 +28,11 @@ public class ATEF extends AbstractEntity {
   @Column (nullable = false, precision = 5, scale = 1)
   private BigDecimal temperature;
 
-  @Column (nullable = false, precision = 5, scale = 1)
+  @Column (nullable = true, precision = 5, scale = 1)
   private BigDecimal maxTemperature;
 
   //No fee = 0, forbidden = null
-  @Column (nullable = false, precision = 5, scale = 1)
+  @Column (nullable = true, precision = 5, scale = 1)
   private BigDecimal fee;
 
   @ManyToMany
@@ -51,11 +52,13 @@ public class ATEF extends AbstractEntity {
     BigDecimal fee,
     Set<Vehicle> vehicles
   ){
+    validateData(condition, temperature, maxTemperature);
+
     this.condition = condition;
-    this.temperature = temperature;
     this.maxTemperature = maxTemperature;
+    this.temperature = temperature;
     this.fee = fee;
-    this.vehicles = new HashSet<>(vehicles);
+    if (vehicles != null) this.vehicles = new HashSet<>(vehicles);
   }
 
   public Condition getCondition(){
@@ -83,11 +86,38 @@ public class ATEF extends AbstractEntity {
   }
 
   public void addVehicle(Vehicle vehicle) {
-    vehicles.add(vehicle);
+    if (vehicle == null) throw new ATEFDataIntegrityViolationException("Cannot add null to vehicles!");
+    this.vehicles.add(vehicle);
   }
 
   public void removeVehicle(Vehicle vehicle) {
-    vehicles.remove(vehicle);
+    if (vehicle == null) throw new ATEFDataIntegrityViolationException("Cannot remove null from vehicles!");
+    this.vehicles.remove(vehicle);
   }
-  
+
+  public void update(Condition condition, BigDecimal temperature, BigDecimal maxTemperature, BigDecimal fee) {
+    validateData(condition, temperature, maxTemperature);
+    
+    this.condition = condition;
+    this.maxTemperature = maxTemperature;
+    this.temperature = temperature;
+    this.fee = fee;
+  }
+
+  private void validateData(Condition condition, BigDecimal temperature, BigDecimal maxTemp){
+    if (condition == null) throw new ATEFDataIntegrityViolationException("Condition must be provided!");
+    if (temperature == null) throw new ATEFDataIntegrityViolationException("Temperature must be provided!");
+
+    if (condition == Condition.related)
+      throw new ATEFDataIntegrityViolationException("ATEF cannot contain condition " + condition.toString());
+
+    if (maxTemp == null && (condition == Condition.inRange || condition == Condition.notInRange))
+      throw new ATEFDataIntegrityViolationException("Range must be specified!");
+    if (maxTemp != null && (condition != Condition.inRange && condition != Condition.notInRange))
+      throw new ATEFDataIntegrityViolationException("Max temperature must be provided only for range conditions!");
+
+    if (maxTemp != null && temperature.compareTo(maxTemp) >= 0)
+      throw new ATEFDataIntegrityViolationException("Temperature cannot be higher or equal to max temperature!");
+  }
+
 }
