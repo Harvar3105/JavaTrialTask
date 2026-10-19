@@ -29,6 +29,7 @@ CREATE TABLE wsef_relation (
 
   wsef_id BIGINT NOT NULL,
   vehicle_id  BIGINT NOT NULL,
-  CONSTRAINT fk_wsef_relation_wsef FOREIGN KEY (wsef_id) REFERENCES wsef (id),
+  CONSTRAINT uq_wsef_relation UNIQUE (wsef_id, vehicle_id),
+  CONSTRAINT fk_wsef_relation_wsef FOREIGN KEY (wsef_id) REFERENCES wsef (id) ON DELETE CASCADE,
   CONSTRAINT fk_wsef_relation_vehicle FOREIGN KEY (vehicle_id ) REFERENCES vehicle (id)
 );
