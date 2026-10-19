@@ -60,7 +60,7 @@ public class RBFController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable Long id) {
+  public void delete(@PathVariable("id") Long id) {
     service.delete(id);
   }
 }

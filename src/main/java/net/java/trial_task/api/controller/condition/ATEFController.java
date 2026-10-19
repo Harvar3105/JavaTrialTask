@@ -61,7 +61,7 @@ public class ATEFController {
   }
 
   @PutMapping("/{id}")
-  public ATEFResponse update(@PathVariable Long id, @Valid @RequestBody ATEFUpdateRequest request) {
+  public ATEFResponse update(@PathVariable("id") Long id, @Valid @RequestBody ATEFUpdateRequest request) {
     ATEF updated = atefService.update(
       id,
       request.condition(),
@@ -74,7 +74,7 @@ public class ATEFController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable Long id) {
+  public void delete(@PathVariable("id") Long id) {
     atefService.delete(id);
   }
 }

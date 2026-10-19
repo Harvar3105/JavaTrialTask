@@ -60,7 +60,7 @@ public class WPEFController {
   }
 
   @PutMapping("/{id}")
-  public WPEFResponse update(@PathVariable Long id, @Valid @RequestBody WPEFUpdateRequest request) {
+  public WPEFResponse update(@PathVariable("id") Long id, @Valid @RequestBody WPEFUpdateRequest request) {
     WPEF updated = wpefService.update(
       id,
       request.condition(),
@@ -72,7 +72,7 @@ public class WPEFController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable Long id) {
+  public void delete(@PathVariable("id") Long id) {
     wpefService.delete(id);
   }
 }
