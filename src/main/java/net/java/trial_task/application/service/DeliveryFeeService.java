@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,7 @@ public class DeliveryFeeService {
   private final WSEFRepository wsefRepository;
   private final WPEFRepository wpefRepository;
   private final WeatherRepository weatherRepository;
+  private static final Logger log = LoggerFactory.getLogger(DeliveryFeeService.class);
 
 public DeliveryFeeService(
   CityRepository cityRepository,
@@ -83,6 +86,15 @@ public DeliveryFeeService(
     BigDecimal atef = calculateAtef(vehicle, weather);
     BigDecimal wsef = calculateWsef(vehicle, weather);
     BigDecimal wpef = calculateWpef(vehicle, weather);
+
+    log.info("City name: " + city.getCityName());
+    log.info("Vehicle name: " + vehicle.getVehicleType());
+    log.info("City name: " + city.getCityName());
+    log.info("RBF: " + rbf);
+    log.info("weather name: " + weather.getStation());
+    log.info("atef: " + atef);
+    log.info("wsef: " + wsef);
+    log.info("wpef: " + wpef);
 
     return rbf.add(atef).add(wsef).add(wpef);
   }

@@ -50,3 +50,16 @@ jacocoTestReport {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+import org.springframework.boot.gradle.tasks.run.BootRun
+
+tasks.register('bootRunSeeded', BootRun) {
+	group = 'application'
+	description = "Runs tests, then starts the application with the 'seed' profile (seed migrations applied)."
+
+	dependsOn tasks.named('test')
+
+	classpath = sourceSets.main.runtimeClasspath
+	mainClass = tasks.named('bootRun', BootRun).flatMap { it.mainClass }
+	systemProperty 'spring.profiles.active', 'seed'
+}
