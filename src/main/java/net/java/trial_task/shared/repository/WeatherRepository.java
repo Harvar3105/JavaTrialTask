@@ -10,6 +10,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import net.java.trial_task.shared.domain.entity.WeatherData;
 
 public interface WeatherRepository extends JpaRepository<WeatherData, Long> {
+  Optional<WeatherData> findFirstByStationContainingIgnoreCaseOrderByObservationTimeDesc(String cityName);
+
+  Optional<WeatherData> findFirstByStationContainingIgnoreCaseAndObservationTimeLessThanEqualOrderByObservationTimeDesc(
+    String cityName,
+    Instant at
+  );
 
   Optional<WeatherData> findFirstByWmoCodeOrderByObservationTimeDesc(Integer wmoCode);
 
