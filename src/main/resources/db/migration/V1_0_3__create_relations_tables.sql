@@ -17,7 +17,8 @@ CREATE TABLE wpef_relation (
 
   wpef_id BIGINT NOT NULL,
   vehicle_id  BIGINT NOT NULL,
-  CONSTRAINT fk_wpef_relation_wpef FOREIGN KEY (wpef_id) REFERENCES wpef (id),
+  CONSTRAINT uq_wpef_relation UNIQUE (wpef_id, vehicle_id),
+  CONSTRAINT fk_wpef_relation_wpef FOREIGN KEY (wpef_id) REFERENCES wpef (id) ON DELETE CASCADE,
   CONSTRAINT fk_wpef_relation_vehicle FOREIGN KEY (vehicle_id ) REFERENCES vehicle (id)
 );
 
