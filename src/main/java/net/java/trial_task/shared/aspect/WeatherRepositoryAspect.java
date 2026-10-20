@@ -8,11 +8,52 @@ import org.springframework.stereotype.Component;
 
 import net.java.trial_task.shared.exceptions.WeatherDataRepositoryUnavailableException;
 
+/**
+ * Aspect that translates Spring's persistence exceptions raised by {@link WeatherRepository}
+ * into {@link WeatherDataRepositoryUnavailableException}.
+ *
+ * <p>Purpose: callers of the weather repository depend on a single module-specific exception
+ * type and do not need to handle {@link DataAccessException} and its subclasses.
+ *
+ * <p>Scope: every method invoked through a Spring proxy of a bean that implements
+ * {@link WeatherRepository}, including methods inherited from
+ * {@link org.springframework.data.jpa.repository.JpaRepository}. The advice is applied by
+ * Spring AOP through proxies, so only calls that pass through the proxy are intercepted.
+ * Exceptions that do not originate in a repository method call are not covered, in
+ * particular failures raised later when an enclosing transaction is flushed or committed.
+ *
+ * <p>The class holds no state.
+ */
 @Aspect
 @Component
 public class WeatherRepositoryAspect {
 
-  @Around("this(com.example.weather.WeatherRepository)")
+  /**
+   * Executes the intercepted repository method and converts a {@link DataAccessException}
+   * thrown by it.
+   *
+   * <p>Behavior:
+   * <ul>
+   *   <li>on normal completion, the return value of the repository method is returned
+   *       unchanged;</li>
+   *   <li>on {@link DataAccessException}, a {@link WeatherDataRepositoryUnavailableException}
+   *       is thrown; its message contains the name of the failed method (without
+   *       arguments) and the original exception is preserved as its cause;</li>
+   *   <li>any other throwable is propagated unchanged.</li>
+   * </ul>
+   *
+   * <p>The advice does not retry the call and does not log the exception.
+   *
+   * @param joinPoint the intercepted repository method invocation, provided by the AOP
+   *     framework
+   * @return the value returned by the repository method, possibly {@code null} if the method
+   *     returns {@code null}
+   * @throws WeatherDataRepositoryUnavailableException if the repository method throws a
+   *     {@link DataAccessException}
+   * @throws Throwable any other throwable raised by the repository method; declared because
+   *     {@link ProceedingJoinPoint#proceed()} declares it
+   */
+  @Around("this(net.java.trial_task.shared.repository.WeatherRepository)")
   public Object handleRepositoryErrors(ProceedingJoinPoint joinPoint)
       throws Throwable {
     try {
