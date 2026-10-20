@@ -61,7 +61,7 @@ public class WSEFController {
   }
 
   @PutMapping("/{id}")
-  public WSEFResponse update(@PathVariable Long id, @Valid @RequestBody WSEFUpdateRequest request) {
+  public WSEFResponse update(@PathVariable("id") Long id, @Valid @RequestBody WSEFUpdateRequest request) {
     WSEF updated = wsefService.update(
       id,
       request.condition(),
@@ -74,7 +74,7 @@ public class WSEFController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable Long id) {
+  public void delete(@PathVariable("id") Long id) {
     wsefService.delete(id);
   }
 }

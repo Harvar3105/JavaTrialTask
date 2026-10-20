@@ -36,7 +36,7 @@ public class VehicleController {
   }
 
   @GetMapping("/{id}")
-  public VehicleResponse getById(@PathVariable Long id) {
+  public VehicleResponse getById(@PathVariable("id") Long id) {
     return VehicleResponse.from(service.findById(id));
   }
 
@@ -49,13 +49,13 @@ public class VehicleController {
   }
 
   @PutMapping("/{id}")
-  public VehicleResponse update(@PathVariable Long id, @Valid @RequestBody VehicleRequest request) {
+  public VehicleResponse update(@PathVariable("id") Long id, @Valid @RequestBody VehicleRequest request) {
     return VehicleResponse.from(service.update(id, request.vehicleType()));
   }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable Long id) {
+  public void delete(@PathVariable("id") Long id) {
     service.delete(id);
   }
 }
