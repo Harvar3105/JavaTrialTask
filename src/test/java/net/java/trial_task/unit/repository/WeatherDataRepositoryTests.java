@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,8 +31,8 @@ public class WeatherDataRepositoryTests {
 
   private static final Instant T0 = Instant.parse("2026-01-01T10:00:00Z");
 
-  @Autowired
-  private WeatherRepository repository;
+  @Autowired private WeatherRepository repository;
+  @Autowired private TestEntityManager em;
 
   @BeforeEach
   void setUp() {
@@ -54,9 +55,12 @@ public class WeatherDataRepositoryTests {
   @DisplayName("save: persists entity, generates id, preserves values")
   void save_persistsAllFields() {
     WeatherData saved = repository.saveAndFlush(data(TARTU, "Tartu-Tõravere", T0, "-2.1"));
+    em.clear();
 
     WeatherData found = repository.findById(saved.getId()).orElseThrow();
 
+    assertThat(found).isNotSameAs(saved);
+    assertThat(found.getId()).isNotNull();
     assertThat(found.getStation()).isEqualTo("Tartu-Tõravere");
     assertThat(found.getWmoCode()).isEqualTo(TARTU);
     assertThat(found.getAirTemperature()).isEqualByComparingTo("-2.1");
