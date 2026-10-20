@@ -76,14 +76,6 @@ public class WPEF extends AbstractEntity {
     return Collections.unmodifiableSet(vehicles);
   }
 
-  public void addVehicle(Vehicle vehicle) {
-    vehicles.add(vehicle);
-  }
-
-  public void removeVehicle(Vehicle vehicle) {
-    vehicles.remove(vehicle);
-  }
-
   public void update(Condition condition, String phenomenon, BigDecimal fee){
     this.validateData(condition, phenomenon);
 

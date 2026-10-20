@@ -15,7 +15,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import net.java.trial_task.application.domain.entity.data.Vehicle;
 import net.java.trial_task.application.domain.enums.Condition;
-import net.java.trial_task.application.exceptions.condition.ATEFDataIntegrityViolationException;
 import net.java.trial_task.application.exceptions.condition.WSEFDataIntegrityViolationException;
 import net.java.trial_task.shared.domain.entity.AbstractEntity;
 
@@ -84,14 +83,6 @@ public class WSEF extends AbstractEntity{
     return Collections.unmodifiableSet(vehicles);
   }
 
-  public void addVehicle(Vehicle vehicle) {
-    vehicles.add(vehicle);
-  }
-
-  public void removeVehicle(Vehicle vehicle) {
-    vehicles.remove(vehicle);
-  }
-
   public void update(Condition condition, BigDecimal windSpeed, BigDecimal maxWindSpeed, BigDecimal fee){
     this.validateData(condition, windSpeed, maxWindSpeed);
 
@@ -106,15 +97,15 @@ public class WSEF extends AbstractEntity{
     if (windSpeed == null) throw new WSEFDataIntegrityViolationException("Wind speed must be provided!");
 
     if (condition == Condition.related)
-      throw new ATEFDataIntegrityViolationException("WSEF cannot contain condition " + condition.toString());
+      throw new WSEFDataIntegrityViolationException("WSEF cannot contain condition " + condition.toString());
 
     if (maxWindSpeed == null && (condition == Condition.inRange || condition == Condition.notInRange))
-      throw new ATEFDataIntegrityViolationException("Range must be specified!");
+      throw new WSEFDataIntegrityViolationException("Range must be specified!");
     if (maxWindSpeed != null && (condition != Condition.inRange && condition != Condition.notInRange))
-      throw new ATEFDataIntegrityViolationException("Max wind speed must be provided only for range conditions!");
+      throw new WSEFDataIntegrityViolationException("Max wind speed must be provided only for range conditions!");
 
     if (maxWindSpeed != null && windSpeed.compareTo(maxWindSpeed) >= 0)
-      throw new ATEFDataIntegrityViolationException("Wind speed cannot be higher or equal to max wind speed!");
+      throw new WSEFDataIntegrityViolationException("Wind speed cannot be higher or equal to max wind speed!");
 
   }
   

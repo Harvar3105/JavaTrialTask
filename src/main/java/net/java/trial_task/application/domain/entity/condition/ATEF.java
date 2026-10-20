@@ -85,16 +85,6 @@ public class ATEF extends AbstractEntity {
     return Collections.unmodifiableSet(vehicles);
   }
 
-  public void addVehicle(Vehicle vehicle) {
-    if (vehicle == null) throw new ATEFDataIntegrityViolationException("Cannot add null to vehicles!");
-    this.vehicles.add(vehicle);
-  }
-
-  public void removeVehicle(Vehicle vehicle) {
-    if (vehicle == null) throw new ATEFDataIntegrityViolationException("Cannot remove null from vehicles!");
-    this.vehicles.remove(vehicle);
-  }
-
   public void update(Condition condition, BigDecimal temperature, BigDecimal maxTemperature, BigDecimal fee) {
     validateData(condition, temperature, maxTemperature);
     
