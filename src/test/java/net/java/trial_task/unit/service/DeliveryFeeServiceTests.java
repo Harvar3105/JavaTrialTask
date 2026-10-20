@@ -34,7 +34,6 @@ import net.java.trial_task.application.exceptions.condition.RBFNotFoundException
 import net.java.trial_task.application.exceptions.data.CityNotFoundException;
 import net.java.trial_task.application.exceptions.data.VehicleNotFoundException;
 import net.java.trial_task.application.exceptions.data.VehicleUsageForbiddenException;
-import net.java.trial_task.application.exceptions.data.WeatherDataNotFoundException;
 import net.java.trial_task.application.repository.condition.ATEFRepository;
 import net.java.trial_task.application.repository.condition.RBFRepository;
 import net.java.trial_task.application.repository.condition.WPEFRepository;
@@ -43,6 +42,7 @@ import net.java.trial_task.application.repository.data.CityRepository;
 import net.java.trial_task.application.repository.data.VehicleRepository;
 import net.java.trial_task.application.service.DeliveryFeeService;
 import net.java.trial_task.shared.domain.entity.WeatherData;
+import net.java.trial_task.shared.exceptions.WeatherDataNotFoundException;
 import net.java.trial_task.shared.repository.WeatherRepository;
 
 @ExtendWith(MockitoExtension.class)

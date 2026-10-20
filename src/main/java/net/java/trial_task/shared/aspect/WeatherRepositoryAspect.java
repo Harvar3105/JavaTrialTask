@@ -4,9 +4,12 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
+import net.java.trial_task.shared.exceptions.WeatherDataIntegrityViolationException;
 import net.java.trial_task.shared.exceptions.WeatherDataRepositoryUnavailableException;
+import net.java.trial_task.shared.repository.WeatherRepository;
 
 /**
  * Aspect that translates Spring's persistence exceptions raised by {@link WeatherRepository}
@@ -58,6 +61,8 @@ public class WeatherRepositoryAspect {
       throws Throwable {
     try {
       return joinPoint.proceed();
+    } catch (DataIntegrityViolationException ex) {
+      throw new WeatherDataIntegrityViolationException("Provided invalid data!");
     } catch (DataAccessException ex) {
       throw new WeatherDataRepositoryUnavailableException(
         "Weather repository operation failed: "
