@@ -28,8 +28,10 @@ import net.java.trial_task.application.repository.condition.WPEFRepository;
 import net.java.trial_task.application.repository.condition.WSEFRepository;
 import net.java.trial_task.application.repository.data.CityRepository;
 import net.java.trial_task.application.repository.data.VehicleRepository;
+import net.java.trial_task.shared.aspect.WeatherRepositoryAspect;
 import net.java.trial_task.shared.domain.entity.WeatherData;
 import net.java.trial_task.shared.exceptions.WeatherDataNotFoundException;
+import net.java.trial_task.shared.exceptions.WeatherDataRepositoryUnavailableException;
 import net.java.trial_task.shared.repository.WeatherRepository;
 import net.java.trial_task.application.util.ConditionEvaluator;
 
@@ -168,14 +170,15 @@ public class DeliveryFeeService {
     BigDecimal wsef = calculateWsef(vehicle, weather);
     BigDecimal wpef = calculateWpef(vehicle, weather);
 
-    log.info("City name: " + city.getCityName());
-    log.info("Vehicle name: " + vehicle.getVehicleType());
-    log.info("City name: " + city.getCityName());
-    log.info("RBF: " + rbf);
-    log.info("weather name: " + weather.getStation());
-    log.info("atef: " + atef);
-    log.info("wsef: " + wsef);
-    log.info("wpef: " + wpef);
+    StringBuilder sb = new StringBuilder();
+    sb.append("City name: ").append(city.getCityName()).append("\n");
+    sb.append("Vehicle name: ").append(vehicle.getVehicleType()).append("\n");
+    sb.append("RBF: ").append(rbf).append("\n");
+    sb.append("Station name: ").append(weather.getStation()).append("\n");
+    sb.append("atef: ").append(atef).append("\n");
+    sb.append("wsef: ").append(wsef).append("\n");
+    sb.append("wpef: ").append(wpef).append("\n");
+    log.info(sb.toString());
 
     return rbf.add(atef).add(wsef).add(wpef);
   }
