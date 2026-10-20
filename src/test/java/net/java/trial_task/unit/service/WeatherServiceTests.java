@@ -9,14 +9,20 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import net.java.trial_task.shared.domain.entity.WeatherData;
+import net.java.trial_task.shared.exceptions.WeatherDataIntegrityViolationException;
+import net.java.trial_task.shared.exceptions.WeatherDataRepositoryUnavailableException;
 import net.java.trial_task.shared.repository.WeatherRepository;
 import net.java.trial_task.shared.service.WeatherService;
 import net.java.trial_task.weather.client.WeatherApiClient;
@@ -27,6 +33,7 @@ import net.java.trial_task.weather.util.ObservationsXmlParser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -116,19 +123,38 @@ class WeatherServiceTests {
   @Test
   void updateRunsFullPipeline() {
     byte[] xml = new byte[] {1};
-    var dto = new ObservationsDto(1L, List.of(new StationDto(
-      "Pärnu",
-      "41803",
-      null,
-      1.0,
-      2.0
-    )));
+    var dto = new ObservationsDto(1L, List.of(new StationDto("Pärnu", "41803", null, 1.0, 2.0)));
     when(client.fetchObservationsXml()).thenReturn(xml);
     when(parser.parse(xml)).thenReturn(dto);
 
     service.updateWeatherAsync();
 
-    verify(repo).saveAllAndFlush(argThat(c -> ((Collection<?>) c).size() == 1));
+    @SuppressWarnings("unchecked")
+    ArgumentCaptor<Iterable<WeatherData>> captor = ArgumentCaptor.forClass(Iterable.class);
+    verify(repo).saveAllAndFlush(captor.capture());
+    assertThat(captor.getValue()).singleElement().satisfies(w -> {
+      assertThat(w.getWmoCode()).isEqualTo(41803);
+      assertThat(w.getStation()).isEqualTo("Pärnu");
+      assertThat(w.getObservationTime()).isEqualTo(Instant.ofEpochSecond(1L));
+    });
+  }
+
+  static Stream<RuntimeException> repositoryFailures() {
+    return Stream.of(
+      new WeatherDataRepositoryUnavailableException("db down"),
+      new WeatherDataIntegrityViolationException("invalid data")
+    );
+  }
+
+  @ParameterizedTest
+  @MethodSource("repositoryFailures")
+  void updateSwallowsRepositoryExceptions(RuntimeException failure) {
+    var dto = new ObservationsDto(1L, List.of(new StationDto("Pärnu", "41803", null, 1.0, 2.0)));
+    when(client.fetchObservationsXml()).thenReturn(new byte[] {1});
+    when(parser.parse(any())).thenReturn(dto);
+    when(repo.saveAllAndFlush(any())).thenThrow(failure);
+
+    assertThatCode(() -> service.updateWeatherAsync()).doesNotThrowAnyException();
   }
 
   @Test
