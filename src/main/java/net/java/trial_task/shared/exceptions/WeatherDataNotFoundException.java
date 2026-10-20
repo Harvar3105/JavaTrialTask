@@ -1,4 +1,4 @@
-package net.java.trial_task.application.exceptions.data;
+package net.java.trial_task.shared.exceptions;
 
 import java.time.Instant;
 
