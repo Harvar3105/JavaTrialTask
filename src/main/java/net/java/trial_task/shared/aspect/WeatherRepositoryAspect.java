@@ -3,9 +3,12 @@ package net.java.trial_task.shared.aspect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionException;
 
 import net.java.trial_task.shared.exceptions.WeatherDataIntegrityViolationException;
 import net.java.trial_task.shared.exceptions.WeatherDataRepositoryUnavailableException;
@@ -29,6 +32,7 @@ import net.java.trial_task.shared.repository.WeatherRepository;
  */
 @Aspect
 @Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class WeatherRepositoryAspect {
 
   /**
@@ -63,7 +67,7 @@ public class WeatherRepositoryAspect {
       return joinPoint.proceed();
     } catch (DataIntegrityViolationException ex) {
       throw new WeatherDataIntegrityViolationException("Provided invalid data!");
-    } catch (DataAccessException ex) {
+    } catch (DataAccessException | TransactionException ex) {
       throw new WeatherDataRepositoryUnavailableException(
         "Weather repository operation failed: "
           + joinPoint.getSignature().getName(),
