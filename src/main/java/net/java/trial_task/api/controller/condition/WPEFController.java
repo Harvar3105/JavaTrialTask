@@ -16,11 +16,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.headers.Header;
 import jakarta.validation.Valid;
 import net.java.trial_task.api.contracts.condition.wpef.WPEFCreateRequest;
 import net.java.trial_task.api.contracts.condition.wpef.WPEFResponse;
 import net.java.trial_task.api.contracts.condition.wpef.WPEFUpdateRequest;
 import net.java.trial_task.application.domain.entity.condition.WPEF;
+import net.java.trial_task.application.exceptions.condition.WPEFNotFoundException;
+import net.java.trial_task.application.exceptions.data.VehicleNotFoundException;
 import net.java.trial_task.application.service.condition.WPEFService;
 
 /**
@@ -39,6 +50,8 @@ import net.java.trial_task.application.service.condition.WPEFService;
  */
 @RestController
 @RequestMapping("/api/wpef")
+@Tag(name = "Weather phenomenon extra fee (WPEF)",
+  description = "Rules for extra fees based on the weather phenomenon. A null fee (forbidden = true) means usage of the vehicle is forbidden.")
 public class WPEFController {
   public final WPEFService wpefService;
 
@@ -59,6 +72,9 @@ public class WPEFController {
    * @return all stored rules, empty list if none exist
    */
   @GetMapping
+  @Operation(summary = "List WPEF rules",
+    description = "Returns all rules with their vehicles. The order of the result is not defined.")
+  @ApiResponse(responseCode = "200", description = "All stored rules; empty array if none exist")
   public List<WPEFResponse> getAll() {
     return wpefService.getAll().stream().map(WPEFResponse::from).toList();
   }
@@ -71,6 +87,12 @@ public class WPEFController {
    * @throws WPEFNotFoundException if no rule with the given id exists
    */
   @GetMapping("/{id}")
+  @Operation(summary = "Get WPEF rule by id")
+  @Parameter(name = "id", in = ParameterIn.PATH, description = "Rule id", example = "1")
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Rule found"),
+    @ApiResponse(responseCode = "404", description = "No rule with the given id", content = @Content)
+  })
   public WPEFResponse getById(@PathVariable("id") Long id) {
     return WPEFResponse.from(wpefService.getById(id));
   }
@@ -87,6 +109,15 @@ public class WPEFController {
    * @throws VehicleNotFoundException if at least one of the vehicle ids does not exist
    */
   @PostMapping
+  @Operation(summary = "Create WPEF rule",
+    description = "Creates a rule applying to the vehicles listed in 'vehicleIds'. If 'forbidden' is true, 'fee' must be null; otherwise 'fee' is required.")
+  @ApiResponses({
+    @ApiResponse(responseCode = "201", description = "Rule created",
+      headers = @Header(name = "Location", description = "URI of the created rule",
+        schema = @Schema(type = "string", format = "uri"))),
+    @ApiResponse(responseCode = "400", description = "Request body failed validation", content = @Content),
+    @ApiResponse(responseCode = "404", description = "At least one of the vehicle ids does not exist", content = @Content)
+  })
   public ResponseEntity<WPEFResponse> create(@Valid @RequestBody WPEFCreateRequest request) {
     WPEF created = wpefService.create(
       request.condition(),
@@ -115,6 +146,14 @@ public class WPEFController {
    * @throws WPEFNotFoundException if no rule with the given id exists
    */
   @PutMapping("/{id}")
+  @Operation(summary = "Replace WPEF rule",
+    description = "Replaces the condition, phenomenon and fee. The vehicles of the rule are not changed by this operation.")
+  @Parameter(name = "id", in = ParameterIn.PATH, description = "Id of the rule to update", example = "1")
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Rule updated"),
+    @ApiResponse(responseCode = "400", description = "Request body failed validation", content = @Content),
+    @ApiResponse(responseCode = "404", description = "No rule with the given id", content = @Content)
+  })
   public WPEFResponse update(@PathVariable("id") Long id, @Valid @RequestBody WPEFUpdateRequest request) {
     WPEF updated = wpefService.update(
       id,
@@ -136,6 +175,13 @@ public class WPEFController {
    */
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @Operation(summary = "Delete WPEF rule",
+    description = "Deletes the rule. Vehicles associated with the rule are not deleted.")
+  @Parameter(name = "id", in = ParameterIn.PATH, description = "Id of the rule to delete", example = "1")
+  @ApiResponses({
+    @ApiResponse(responseCode = "204", description = "Rule deleted; no body", content = @Content),
+    @ApiResponse(responseCode = "404", description = "No rule with the given id", content = @Content)
+  })
   public void delete(@PathVariable("id") Long id) {
     wpefService.delete(id);
   }

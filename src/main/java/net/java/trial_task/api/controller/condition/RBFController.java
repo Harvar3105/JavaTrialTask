@@ -1,5 +1,6 @@
 package net.java.trial_task.api.controller.condition;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -14,6 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.headers.Header;
+
 import org.springframework.http.HttpStatus;
 
 import jakarta.validation.Valid;
@@ -21,6 +33,7 @@ import net.java.trial_task.api.contracts.condition.rbf.RBFCreateRequest;
 import net.java.trial_task.api.contracts.condition.rbf.RBFResponse;
 import net.java.trial_task.api.contracts.condition.rbf.RBFUpdateRequest;
 import net.java.trial_task.application.domain.entity.condition.RBF;
+import net.java.trial_task.application.exceptions.condition.RBFNotFoundException;
 import net.java.trial_task.application.service.condition.RBFService;
 
 /**
@@ -40,6 +53,8 @@ import net.java.trial_task.application.service.condition.RBFService;
  */
 @RestController
 @RequestMapping("/api/rbf")
+@Tag(name = "Regional base fee (RBF)",
+  description = "Base fee for a pair of city and vehicle type. The pair is fixed at creation; only the fee can be changed. A null fee means usage of the vehicle in the city is forbidden.")
 public class RBFController {
   private final RBFService service;
 
@@ -60,6 +75,8 @@ public class RBFController {
    * @return all stored records, empty list if none exist
    */
   @GetMapping
+  @Operation(summary = "List RBF records", description = "Returns all records. The order of the result is not defined.")
+  @ApiResponse(responseCode = "200", description = "All stored records; empty array if none exist")
   public List<RBFResponse> findAll() {
     return service.findAll().stream().map(RBFResponse::from).toList();
   }
@@ -72,6 +89,12 @@ public class RBFController {
    * @throws RBFNotFoundException if no record with the given id exists
    */
   @GetMapping("/{id}")
+  @Operation(summary = "Get RBF record by id")
+  @Parameter(name = "id", in = ParameterIn.PATH, description = "Record id", example = "1")
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Record found"),
+    @ApiResponse(responseCode = "404", description = "No record with the given id", content = @Content)
+  })
   public RBFResponse findById(@PathVariable("id") Long id) {
     return RBFResponse.from(service.findById(id));
   }
@@ -88,6 +111,14 @@ public class RBFController {
    * @return the created record with status 201
    */
   @PostMapping
+  @Operation(summary = "Create RBF record",
+    description = "Creates a record for a city and vehicle type referenced by ids. Existence of the referenced city and vehicle and uniqueness of the pair are not checked.")
+  @ApiResponses({
+    @ApiResponse(responseCode = "201", description = "Record created",
+      headers = @Header(name = "Location", description = "URI of the created record",
+        schema = @Schema(type = "string", format = "uri"))),
+    @ApiResponse(responseCode = "400", description = "Request body failed validation", content = @Content)
+  })
   public ResponseEntity<RBFResponse> create(@Valid @RequestBody RBFCreateRequest request) {
     RBF created = service.create(request.cityId(), request.vehicleTypeId(), request.fee());
     URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -107,6 +138,14 @@ public class RBFController {
    * @throws RBFNotFoundException if no record with the given id exists
    */
   @PutMapping("/{id}")
+  @Operation(summary = "Replace RBF fee",
+    description = "Replaces only the fee. The city and vehicle of the record cannot be changed. A null fee means usage is forbidden.")
+  @Parameter(name = "id", in = ParameterIn.PATH, description = "Id of the record to update", example = "1")
+  @ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Record updated"),
+    @ApiResponse(responseCode = "400", description = "Request body failed validation", content = @Content),
+    @ApiResponse(responseCode = "404", description = "No record with the given id", content = @Content)
+  })
   public RBFResponse updateFee(
     @PathVariable("id") Long id,
     @Valid @RequestBody RBFUpdateRequest request
@@ -124,6 +163,12 @@ public class RBFController {
    */
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @Operation(summary = "Delete RBF record")
+  @Parameter(name = "id", in = ParameterIn.PATH, description = "Id of the record to delete", example = "1")
+  @ApiResponses({
+    @ApiResponse(responseCode = "204", description = "Record deleted; no body", content = @Content),
+    @ApiResponse(responseCode = "404", description = "No record with the given id", content = @Content)
+  })
   public void delete(@PathVariable("id") Long id) {
     service.delete(id);
   }

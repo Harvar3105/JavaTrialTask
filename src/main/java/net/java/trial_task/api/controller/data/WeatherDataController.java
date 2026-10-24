@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import net.java.trial_task.shared.service.WeatherService;
 
 /**
@@ -17,6 +21,7 @@ import net.java.trial_task.shared.service.WeatherService;
  */
 @RestController
 @RequestMapping("/api/weather")
+@Tag(name = "Weather", description = "Weather data import")
 public class WeatherDataController {
   private final WeatherService service;
 
@@ -42,6 +47,17 @@ public class WeatherDataController {
    */
   @PostMapping("/updateWeatherData")
   @ResponseStatus(HttpStatus.ACCEPTED)
+  @Operation(
+    summary = "Trigger weather data update",
+    description = """
+      Starts an asynchronous import of weather observations from the Estonian Environment Agency. \
+      The request takes no parameters and no body. The response only confirms that the request was accepted; \
+      it does not indicate that the import has completed or succeeded, and import failures are not reported \
+      to the caller.""")
+  @ApiResponse(
+    responseCode = "202",
+    description = "Update request accepted; no body",
+    content = @Content)
   public void updateWeatherData(){
     service.updateWeatherAsync();
   }
